@@ -42,7 +42,7 @@ public class Book {
     }
 
     public void setISBN(String isbn) {
-        if (!isbnIsValid(isbn) ) {
+        if (!isbnIsValid(isbn)) {
             throw new RuntimeException("ISBN is required");
         }
         this.isbn = isbn;
@@ -53,18 +53,19 @@ public class Book {
     }
 
     public void setPublicationYear(int publicationYear) {
-        if(publicationYear > LocalDate.now().getYear()){
+        if (publicationYear > LocalDate.now().getYear()) {
             throw new RuntimeException("Publication year cannot be in the future");
         }
         this.publicationYear = publicationYear;
     }
+  
     private boolean isbnIsValid(String isbn) {
-        if (isbn == null || isbn.length() < 13 ) {
+        if (isbn == null || isbn.length() < 13) {
             return false;
         }
         String cleanIsbn = isbn
-                            .trim()
-                            .replace("-", "");
+                .trim()
+                .replace("-", "");
         return cleanIsbn.length() == 13;
     }
 }
