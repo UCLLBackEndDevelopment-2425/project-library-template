@@ -5,14 +5,14 @@ import java.time.LocalDate;
 public class Book {
     private String title;
     private String author;
-    private String ISBN;
+    private String isbn;
     private int publicationYear;
 
-    public Book(String title, String author, String ISBN, int publicationYear) {
-        this.title = title;
-        this.author = author;
-        this.ISBN = ISBN;
-        this.publicationYear = publicationYear;
+    public Book(String title, String author, String isbn, int publicationYear) {
+        setTitle(title);
+        setAuthor(author);
+        setISBN(isbn);
+        setPublicationYear(publicationYear);
     }
 
     public String getTitle() {
@@ -20,6 +20,9 @@ public class Book {
     }
 
     public void setTitle(String title) {
+        if (title == null || title.trim().isEmpty()) {
+            throw new RuntimeException("Title is required");
+        }
         this.title = title;
     }
 
@@ -28,15 +31,21 @@ public class Book {
     }
 
     public void setAuthor(String author) {
+        if (author == null || author.trim().isEmpty()) {
+            throw new RuntimeException("Author is required");
+        }
         this.author = author;
     }
 
     public String getISBN() {
-        return ISBN;
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setISBN(String isbn) {
+        if (!isbnIsValid(isbn) ) {
+            throw new RuntimeException("ISBN is required");
+        }
+        this.isbn = isbn;
     }
 
     public int getPublicationYear() {
@@ -44,6 +53,18 @@ public class Book {
     }
 
     public void setPublicationYear(int publicationYear) {
+        if(publicationYear > LocalDate.now().getYear()){
+            throw new RuntimeException("Publication year cannot be in the future");
+        }
         this.publicationYear = publicationYear;
+    }
+    private boolean isbnIsValid(String isbn) {
+        if (isbn == null || isbn.length() < 13 ) {
+            return false;
+        }
+        String cleanIsbn = isbn
+                            .trim()
+                            .replace("-", "");
+        return cleanIsbn.length() == 13;
     }
 }
