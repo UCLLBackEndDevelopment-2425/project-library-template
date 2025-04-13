@@ -58,7 +58,7 @@ public class Book {
         }
         this.publicationYear = publicationYear;
     }
-
+  
     private boolean isbnIsValid(String isbn) {
         if (isbn == null || isbn.length() < 13) {
             return false;
