@@ -1,29 +1,13 @@
 package be.ucll.model;
 
-import java.time.LocalDate;
-
-public class Book {
-    private String title;
+public class Book extends Publication {
     private String author;
     private String isbn;
-    private int publicationYear;
 
-    public Book(String title, String author, String isbn, int publicationYear) {
-        setTitle(title);
+    public Book(String title, String author, String isbn, int publicationYear, int availableCopies) {
+        super(title, publicationYear, availableCopies);
         setAuthor(author);
         setISBN(isbn);
-        setPublicationYear(publicationYear);
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        if (title == null || title.trim().isEmpty()) {
-            throw new RuntimeException("Title is required");
-        }
-        this.title = title;
     }
 
     public String getAuthor() {
@@ -48,17 +32,6 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public int getPublicationYear() {
-        return publicationYear;
-    }
-
-    public void setPublicationYear(int publicationYear) {
-        if (publicationYear > LocalDate.now().getYear()) {
-            throw new RuntimeException("Publication year cannot be in the future");
-        }
-        this.publicationYear = publicationYear;
-    }
-  
     private boolean isbnIsValid(String isbn) {
         if (isbn == null || isbn.length() < 13) {
             return false;
